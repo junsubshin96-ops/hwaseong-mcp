@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>화성MCP 소개</title>
+<meta name="description" content="시민이 쓰는 AI가 화성시 정보를 찾고 예약하고 민원까지 접수하는 AI 전용 창구, 화성MCP를 소개합니다.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="화성MCP 소개">
+<meta property="og:description" content="AI에게 말하면 화성시가 처리합니다. 발표자료·영상·체험판으로 알아보세요.">
+<meta property="og:image" content="media/intro_poster.jpg">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="media/hs_logo.png">
+
+<style>
+@font-face { font-family: "Pretendard"; font-weight: 400; font-display: swap; src: url(media/Pretendard-Regular.woff2) format("woff2"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; font-display: swap; src: url(media/Pretendard-Bold.woff2) format("woff2"); }
+/* 밝은 단일 톤의 안내서. 첫 화면에 살아 움직이는 휴대폰 하나, 나머지는 조용한 직각 구획. 남색 잉크 + 코발트(정보) + 오렌지(행동) */
+:root {
+  color-scheme: light;
+  --bg: #FFFFFF; --soft: #F5F7FB; --soft2: #EEF2FA; --ink: #0F1830; --sub: #475169; --mute: #8A92A5; --line: #E3E7EF;
+  --blue: #2447D6; --blueSoft: #E8EEFF; --orange: #EC5B1E; --orangeSoft: #FFF1E9;
+  --f: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  /* 실제 Claude 안드로이드 앱 화면에서 뽑은 색(시연 영상과 같음) */
+  --app: #F9F9F7; --appInk: #1C1C1B; --appSub: #85847F; --bubble: #F0EFEB; --bubbleLine: #E4E3DF; --chip: #F0EFEB; --clay: #D97757; --appLine: #E6E5E1;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 70px; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f); font-size: 17px; line-height: 1.7; margin: 0; word-break: keep-all; -webkit-text-size-adjust: 100%; }
+h1, h2, h3, p { margin: 0; }
+p, li, summary, .speak button, .mu div, .cap, .pill2, .st .d { text-wrap: pretty; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.28; letter-spacing: -0.02em; }
+a { color: var(--blue); }
+.nw { white-space: nowrap; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+.eyebrow { font-size: 14px; font-weight: 700; color: var(--blue); letter-spacing: .04em; }
+.lead { font-size: 18px; color: var(--sub); max-width: 48em; text-wrap: balance; }
+
+nav.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: rgba(255,255,255,.92); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line); }
+nav.top .wrap { display: flex; align-items: center; gap: 16px; height: 60px; }
+.logo { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 18px; white-space: nowrap; color: var(--ink); text-decoration: none; }
+.logo img { height: 24px; width: auto; display: block; }
+.logo .bar { width: 1px; height: 18px; background: var(--line); margin: 0 3px; }
+.logo b { color: var(--blue); }
+nav.top .links { display: flex; gap: 2px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+nav.top .links::-webkit-scrollbar { display: none; }
+nav.top .links a { flex: none; color: var(--sub); text-decoration: none; font-size: 15px; padding: 7px 11px; border-radius: 8px; }
+nav.top .links a:hover { background: var(--soft); color: var(--ink); }
+
+section { padding-block: 48px; }
+@media (min-width: 981px) { section { min-height: calc(100svh - 61px); display: flex; flex-direction: column; justify-content: center; } }
+.band { background: var(--soft); }
+.sec-head { display: grid; gap: 10px; margin-bottom: 32px; }
+.sec-head h2 { font-size: clamp(28px, 3.8vw, 40px); font-weight: 700; }
+
+/* 첫 화면 */
+.hero { padding-block: 40px; min-height: calc(100svh - 61px); display: flex; align-items: center; background: linear-gradient(180deg, var(--soft2) 0%, var(--bg) 78%); overflow: hidden; }
+.hero-grid { width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 64px; align-items: center; }
+.hero h1 { font-size: clamp(44px, 7.4vw, 80px); font-weight: 700; letter-spacing: -0.035em; line-height: 1.12; margin-top: 16px; }
+.hero h1 em { font-style: normal; color: var(--blue); }
+.hero .ans { margin-top: 26px; font-size: clamp(18px, 2.4vw, 25px); line-height: 1.6; max-width: none; color: var(--ink); }
+.hero .ans strong { color: var(--orange); font-weight: 700; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.pill2 { font-size: 15px; padding: 7px 14px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); color: var(--sub); }
+.pill2 b { color: var(--ink); }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 700 16px/1 var(--f); padding: 16px 22px; border-radius: 12px; text-decoration: none; border: 1px solid transparent; cursor: pointer; }
+.btn.pri { background: var(--ink); color: #fff; }
+.btn.pri:hover { background: var(--blue); }
+.btn.sec { background: var(--bg); color: var(--ink); border-color: var(--line); }
+.stage { position: relative; justify-self: center; }
+.stage .cap { position: absolute; left: -190px; top: 120px; width: 210px; font-size: 14px; color: var(--sub); background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; box-shadow: 0 8px 24px rgba(15,24,48,.06); transition: opacity .4s; }
+.stage .cap b { display: block; color: var(--orange); font-size: 12.5px; margin-bottom: 2px; }
+
+/* 휴대폰(갤럭시형) + Claude 앱 */
+.phone { --ph: clamp(600px, calc(100svh - 150px), 760px); height: var(--ph); width: calc(var(--ph) * .474); border-radius: 48px; background: #121214; padding: 9px; box-shadow: 0 40px 80px rgba(15,24,48,.18), 0 6px 18px rgba(15,24,48,.10), inset 0 0 0 2px #2c2c30; position: relative; flex: none; }
+.phone::after { content: ""; position: absolute; right: -3px; top: 150px; width: 3px; height: 70px; border-radius: 0 3px 3px 0; background: #2a2a2e; }
+.scr { position: relative; width: 100%; height: 100%; border-radius: 40px; overflow: hidden; background: var(--app); color: var(--appInk); font-family: var(--f); }
+.punch { position: absolute; left: 50%; top: 11px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: #0b0b0c; z-index: 9; }
+.stat { position: absolute; top: 0; left: 0; right: 0; height: 32px; display: flex; justify-content: space-between; align-items: center; padding: 3px 20px 0 22px; font-size: 13px; font-weight: 700; color: #222; z-index: 8; font-variant-numeric: tabular-nums; }
+.stat .r { display: flex; gap: 5px; align-items: center; }
+.bat { height: 14px; min-width: 25px; border-radius: 7px; background: #3a3a3a; color: #fff; font-size: 10px; font-weight: 700; display: grid; place-items: center; padding: 0 5px; }
+.apptop { position: absolute; top: 32px; left: 0; right: 0; height: 46px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px 0 16px; background: var(--app); z-index: 7; }
+.apptop .rt { display: flex; align-items: center; gap: 18px; }
+.chat { position: absolute; top: 78px; left: 0; right: 0; bottom: 142px; overflow: hidden; }
+.chat::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 18px; z-index: 2; background: linear-gradient(var(--app), rgba(249,249,247,0)); pointer-events: none; }
+.inner { position: absolute; left: 0; right: 0; bottom: 0; padding: 6px 16px 12px 17px; transition: transform .35s ease; }
+.mu { display: flex; justify-content: flex-end; margin: 14px -4px 14px 0; }
+.mu div { max-width: 82%; background: var(--bubble); border: 1px solid var(--bubbleLine); border-radius: 18px; padding: 9px 13px; font-size: 14px; line-height: 1.5; }
+.ma { font-family: Georgia, "Pretendard", serif; font-size: 14.5px; line-height: 1.62; margin-bottom: 4px; font-variant-numeric: lining-nums; }
+.ma p { margin: 0 0 8px; }
+.ma ul { list-style: none; margin: 0 0 8px; padding: 0; }
+.ma li { position: relative; padding-left: 16px; margin-bottom: 4px; }
+.ma li::before { content: ""; position: absolute; left: 5px; top: 10px; width: 5px; height: 5px; border-radius: 50%; background: var(--appInk); }
+.ma b { font-weight: 700; }
+.ma .lk { color: #C8643F; text-decoration: underline; text-underline-offset: 3px; }
+.ma table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 2px 0 8px; font-family: var(--f); }
+.ma th, .ma td { text-align: left; padding: 5px 3px; border-bottom: 1px solid var(--appLine); }
+.ma .off { color: #6d6c67; }
+.ln { display: flex; align-items: center; gap: 8px; color: var(--appSub); font-size: 14px; margin: 4px 0 12px 3px; }
+.cn { width: 18px; height: 18px; border-radius: 5px; background: #1D1D1D; display: grid; grid-template-columns: repeat(3, 3px); gap: 2px; place-content: center; flex: none; }
+.cn i { width: 3px; height: 3px; border-radius: 50%; background: #fff; display: block; }
+.dt { display: flex; gap: 3px; } .dt i { width: 4px; height: 4px; border-radius: 50%; background: var(--clay); display: block; animation: pulse 1.05s infinite; }
+.dt i:nth-child(2) { animation-delay: .35s; } .dt i:nth-child(3) { animation-delay: .7s; }
+@keyframes pulse { 0%, 100% { opacity: .35; } 40% { opacity: 1; } }
+.acts { display: flex; gap: 18px; margin: 2px 0 14px 1px; }
+.welcome { position: absolute; left: 0; right: 0; top: 270px; text-align: center; transition: opacity .3s; }
+.welcome h4 { font-weight: 700; font-size: 21px; margin: 14px 0 0; }
+.comp { position: absolute; left: 12px; right: 12px; bottom: 46px; border: 1px solid var(--appLine); border-radius: 24px; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.05); padding: 12px 10px 8px 12px; z-index: 7; }
+.comp .tx { font-size: 15px; min-height: 22px; line-height: 1.45; padding: 0 4px 0 5px; max-height: 66px; overflow: hidden; }
+.comp .tx.ph { color: #9A9994; }
+.comp .row { display: flex; justify-content: space-between; align-items: center; margin-top: 9px; }
+.comp .l, .comp .r { display: flex; gap: 7px; align-items: center; }
+.cb { width: 32px; height: 32px; border-radius: 50%; background: var(--chip); display: grid; place-items: center; }
+.mp { white-space: nowrap; height: 32px; border-radius: 16px; background: var(--chip); padding: 0 13px; display: flex; align-items: center; font-size: 12.5px; color: #2b2b2a; }
+.act { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; }
+.caret { display: inline-block; width: 2px; height: 17px; background: var(--clay); vertical-align: -3px; margin-left: 1px; animation: pulse 1s infinite; }
+.anav { position: absolute; left: 0; right: 0; bottom: 0; height: 38px; background: #fff; display: flex; justify-content: space-around; align-items: center; padding: 0 56px; z-index: 8; }
+
+/* 한눈에 */
+.eras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.era { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 22px 24px; display: grid; gap: 10px; align-content: start; }
+.era .when { font-size: 14px; font-weight: 700; color: var(--mute); }
+.era .ico2 { width: 46px; height: 46px; border-radius: 12px; background: var(--soft); display: grid; place-items: center; grid-row: 1 / 4; }
+.era { grid-template-columns: 46px 1fr; column-gap: 16px; row-gap: 4px; }
+.era h3 { font-size: 24px; font-weight: 700; }
+.era p { color: var(--sub); font-size: 16px; }
+.era.now { background: var(--ink); border-color: var(--ink); color: #fff; }
+.era.now .when { color: #9fb3ff; }
+.era.now p { color: #c9d1e6; }
+.era.now .ico2 { background: rgba(255,255,255,.08); }
+.plug { margin-top: 14px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: center; background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 24px 28px; }
+.plug h3 { font-size: 24px; font-weight: 700; }
+.plug h3 span { color: var(--blue); }
+.plug p { color: var(--sub); font-size: 16px; margin-top: 10px; }
+.plugs { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
+.ais { display: grid; gap: 8px; }
+.ais span { font-size: 14px; font-weight: 700; padding: 7px 12px; border-radius: 10px; background: var(--soft); text-align: center; }
+.sock { width: 92px; height: 92px; border-radius: 22px; background: var(--blue); color: #fff; display: grid; place-items: center; text-align: center; font-weight: 700; font-size: 14px; line-height: 1.3; box-shadow: 0 10px 24px rgba(36,71,214,.25); }
+.srcs { display: grid; gap: 8px; }
+.srcs span { font-size: 14px; padding: 7px 12px; border-radius: 10px; border: 1px solid var(--line); text-align: center; color: var(--sub); }
+
+/* 영상 */
+.videos { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.vcard { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.vframe { border-radius: 16px; overflow: hidden; background: #0f1830; box-shadow: 0 20px 44px rgba(15,24,48,.12); }
+.vframe video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #0f1830; }
+.vmeta { display: flex; gap: 8px; flex-wrap: wrap; }
+.vmeta span { font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: var(--soft); color: var(--sub); }
+.vcard h3 { font-size: 22px; font-weight: 700; }
+.vcard p { color: var(--sub); font-size: 16px; }
+
+/* 체험 */
+.lab { display: grid; grid-template-columns: auto 1fr; gap: 56px; align-items: start; }
+.lab-h { font-size: clamp(28px, 3.4vw, 38px); font-weight: 700; margin: 8px 0 8px; }
+.lab-lead { margin-bottom: 20px; }
+#try { padding-block: 32px; overflow: hidden; }
+#try .phone { --ph: clamp(560px, calc(100svh - 130px), 760px); }
+@media (max-width: 980px) {
+  .lab { display: flex; flex-direction: column; gap: 0; }
+  .why { display: contents; }
+  .why > .eyebrow { order: 1; } .lab-h { order: 2; } .tabs { order: 3; }
+  .speak { order: 4; max-width: none; margin-bottom: 14px; } .labl { order: 5; margin-bottom: 20px; } #whyT { order: 6; } .steps { order: 7; } .disc { order: 8; }
+}
+@media (min-width: 981px) { .steps.four { grid-template-columns: 1fr 1fr; } }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.tabs button { font: 700 14.5px/1 var(--f); padding: 11px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--sub); cursor: pointer; display: flex; align-items: center; gap: 8px; }
+.tabs button .n { width: 22px; height: 22px; border-radius: 50%; background: var(--soft); display: grid; place-items: center; font-size: 12px; color: var(--mute); }
+.tabs button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.tabs button[aria-pressed="true"] .n { background: var(--orange); color: #fff; }
+.labl { display: grid; gap: 16px; justify-items: center; }
+.speak { width: 100%; max-width: 600px; margin-bottom: 20px; grid-template-columns: 1fr auto; align-items: center; gap: 14px; display: grid; gap: 8px; }
+.speak #say { width: 100%; text-align: left; font: 400 15.5px/1.5 var(--f); color: var(--ink); background: var(--bg); border: 2px solid var(--ink); border-radius: 16px; padding: 14px 16px 14px 54px; cursor: pointer; position: relative; box-shadow: 0 6px 0 var(--ink); transition: transform .08s, box-shadow .08s; }
+.speak #say:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--ink); }
+.speak #say::before { content: ""; position: absolute; left: 14px; top: 50%; margin-top: -14px; width: 28px; height: 28px; border-radius: 50%; background: var(--orange); }
+.speak #say::after { content: ""; position: absolute; left: 24px; top: 50%; margin-top: -7px; border-left: 10px solid #fff; border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+.speak #say .h { display: block; font-size: 12.5px; font-weight: 700; color: var(--orange); margin-bottom: 2px; }
+.speak #say:disabled { opacity: .45; cursor: default; transform: translateY(4px); box-shadow: 0 2px 0 var(--ink); }
+.tabrow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-bottom: 22px; }
+.tabrow .tabs { margin-bottom: 0; }
+.reset { white-space: nowrap; font: 400 14px/1 var(--f); color: var(--mute); background: none; border: 0; cursor: pointer; padding: 6px; justify-self: center; text-decoration: underline; text-underline-offset: 3px; }
+.why { min-width: 0; }
+.why h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+.why .sub { color: var(--sub); font-size: 15.5px; margin-bottom: 14px; }
+.steps { display: grid; gap: 8px; counter-reset: s; }
+.st { display: grid; grid-template-columns: 36px 1fr; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--line); color: var(--mute); transition: all .35s; }
+.st .no { width: 36px; height: 36px; border-radius: 10px; background: var(--soft); display: grid; place-items: center; font-weight: 700; font-size: 16px; color: var(--mute); font-variant-numeric: tabular-nums; }
+.st .t { font-size: 16px; font-weight: 700; color: var(--mute); }
+.st .d { font-size: 14.5px; margin-top: 1px; line-height: 1.55; }
+.st.on { border-color: var(--orange); box-shadow: 0 10px 24px rgba(236,91,30,.10); color: var(--sub); }
+.st.on .no { background: var(--orange); color: #fff; }
+.st.on .t { color: var(--ink); }
+.st.done { color: var(--sub); }
+.st.done .no { background: var(--orangeSoft); color: var(--orange); }
+.st.done .t { color: var(--ink); }
+.st b { color: var(--ink); }
+.disc { margin-top: 14px; font-size: 13px; color: var(--mute); padding: 14px 16px; border-radius: 12px; background: var(--soft); }
+
+/* 원리 */
+.flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; position: relative; }
+.node { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 24px 22px; display: grid; gap: 8px; align-content: start; position: relative; min-width: 0; }
+.node:not(:last-child)::after { content: ""; position: absolute; right: -12px; top: 50%; width: 10px; height: 10px; border-top: 2px solid var(--mute); border-right: 2px solid var(--mute); transform: translateY(-50%) rotate(45deg); }
+.node .k { font-size: 13px; font-weight: 700; color: var(--mute); }
+.node h3 { font-size: 21px; font-weight: 700; }
+.node p, .node li { font-size: 15.5px; color: var(--sub); }
+.node ul { margin: 0; padding-left: 18px; }
+.node.hub { background: var(--blue); border-color: var(--blue); color: #fff; box-shadow: 0 16px 34px rgba(36,71,214,.25); }
+.node.hub .k { color: #c7d3ff; } .node.hub p { color: #e3e9ff; }
+.caps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+.capc { border-radius: 18px; padding: 26px 24px; background: var(--soft); display: grid; gap: 8px; align-content: start; }
+.capc .k { font-size: 13.5px; font-weight: 700; color: var(--orange); }
+.capc h3 { font-size: 21px; font-weight: 700; }
+.capc p { font-size: 15.5px; color: var(--sub); }
+.capc .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.capc .tags span { font-size: 13px; padding: 4px 9px; border-radius: 6px; background: var(--bg); color: var(--sub); }
+
+/* 안심 */
+.safe { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.safe div { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 26px 22px; display: grid; gap: 10px; align-content: start; }
+.safe .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--blueSoft); display: grid; place-items: center; }
+.safe h3 { font-size: 19px; font-weight: 700; }
+.safe p { font-size: 15.5px; color: var(--sub); }
+
+/* 발표자료 */
+.deck { display: grid; grid-template-columns: 1fr 260px; gap: 22px; align-items: start; }
+.dview { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--bg); box-shadow: 0 20px 44px rgba(15,24,48,.10); position: relative; }
+.dview img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #fff; }
+.dnav { position: absolute; inset: 0; display: flex; justify-content: space-between; align-items: center; padding: 0 10px; pointer-events: none; }
+.dnav button { pointer-events: auto; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.94); font: 700 20px/1 var(--f); color: var(--ink); cursor: pointer; box-shadow: 0 4px 14px rgba(15,24,48,.12); }
+.thumbs { display: grid; gap: 10px; }
+.thumbs button { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; text-align: left; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 8px; cursor: pointer; font: 400 14px/1.4 var(--f); color: var(--sub); }
+.thumbs button img { width: 96px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); }
+.thumbs button b { display: block; color: var(--ink); font-size: 14.5px; }
+.thumbs button[aria-current="true"] { border-color: var(--blue); box-shadow: 0 0 0 2px var(--blueSoft); }
+.dcap { margin-top: 14px; font-size: 16px; color: var(--sub); }
+.dcap b { color: var(--ink); margin-right: 8px; font-variant-numeric: tabular-nums; }
+
+/* 앞으로 */
+.road { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.road div { border-radius: 18px; padding: 26px 24px; background: var(--bg); border: 1px solid var(--line); display: grid; gap: 8px; align-content: start; }
+.road div:first-child { border: 2px solid var(--blue); }
+.road .y { display: inline-block; justify-self: start; font-size: 14px; font-weight: 700; color: var(--blue); background: var(--blueSoft); padding: 4px 10px; border-radius: 6px; font-variant-numeric: tabular-nums; }
+.road h3 { font-size: 21px; font-weight: 700; }
+.road p { font-size: 15.5px; color: var(--sub); }
+.gov { margin-top: 18px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; border-radius: 18px; padding: 22px 24px; background: var(--bg); border: 1px solid var(--line); }
+.gov .k { font-size: 14px; font-weight: 700; color: var(--orange); white-space: nowrap; padding-top: 2px; }
+.gov p { font-size: 16px; color: var(--sub); }
+
+/* 질문 */
+.faq { max-width: none; }
+section > .wrap { width: 100%; }
+details { border-bottom: 1px solid var(--line); }
+details:first-child { border-top: 1px solid var(--line); }
+summary { cursor: pointer; list-style: none; padding: 22px 44px 22px 0; font-size: 19px; font-weight: 700; position: relative; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: ""; position: absolute; right: 8px; top: 30px; width: 10px; height: 10px; border-right: 2px solid var(--mute); border-bottom: 2px solid var(--mute); transform: rotate(45deg); transition: transform .2s; }
+details[open] summary::after { transform: rotate(-135deg); top: 34px; }
+details p { padding: 0 0 24px; color: var(--sub); }
+
+.closing { text-align: center; padding-block: 96px; background: var(--ink); color: #fff; }
+.closing h2 { font-size: clamp(30px, 5vw, 52px); font-weight: 700; }
+.closing h2 em { font-style: normal; color: #9fb3ff; }
+.closing p { margin-top: 14px; color: #c9d1e6; font-size: 18px; }
+.closing .btn { margin-top: 28px; background: #fff; color: var(--ink); }
+footer { padding-block: 34px 48px; font-size: 14px; color: var(--mute); background: var(--ink); border-top: 1px solid rgba(255,255,255,.08); }
+footer b { color: #fff; }
+.flogo { display: block; height: 22px; width: auto; margin-bottom: 12px; background: #fff; padding: 6px 10px; border-radius: 6px; box-sizing: content-box; }
+
+@media (max-width: 980px) {
+  .hero-grid, .lab, .deck { grid-template-columns: 1fr; }
+  .hero-grid { gap: 48px; }
+  .stage .cap { display: none; }
+  .thumbs { grid-template-columns: repeat(3, 1fr); }
+  .thumbs button { grid-template-columns: 1fr; }
+  .thumbs button img { width: 100%; }
+  .flow { grid-template-columns: repeat(2, 1fr); }
+  .node:nth-child(2)::after { display: none; }
+  .safe { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 680px) {
+  body { font-size: 16px; }
+  section { padding-block: 68px; }
+  .eras, .caps, .road, .videos { grid-template-columns: 1fr; }
+  .plug { grid-template-columns: 1fr; padding: 22px; }
+  .flow, .safe { grid-template-columns: 1fr; }
+  .node:not(:last-child)::after { right: 50%; top: auto; bottom: -12px; transform: translateX(50%) rotate(135deg); }
+  .thumbs { grid-template-columns: repeat(2, 1fr); }
+  .gov { grid-template-columns: 1fr; gap: 6px; }
+  .phone { --ph: min(640px, calc(100svh - 150px), 175vw) !important; border-radius: 44px; }
+  .hero { min-height: 0; }
+}
+
+@media (max-width: 380px) { .hero .ans { font-size: 16.5px; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+
+<nav class="top" aria-label="이 페이지 안 이동">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="화성특례시 화성MCP 처음으로"><img src="media/hs_logo.png" alt="화성특례시" width="107" height="24"><span class="bar"></span>화성<b>MCP</b></a>
+    <div class="links"><a href="#deck">발표자료</a><a href="#video">영상</a><a href="#try">체험</a><a href="#what">왜 필요한가</a><a href="#how">원리</a><a href="#safe">안심</a><a href="#faq">질문</a></div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">화성특례시 화성MCP 소개</div>
+      <h1>AI에게 말하면<br>화성시가 <em>처리</em>합니다</h1>
+      <p class="ans">시민이 쓰는 AI가<br><strong>화성시 정보를 찾고 <span class="nw">예약하고 민원까지</span> 접수</strong>하는<br><span class="nw">AI 전용 창구</span>입니다.</p>
+      <div class="pills"><span class="pill2"><b>민원</b> 도와드림 QR</span><span class="pill2"><b>예약</b> 통합예약</span><span class="pill2"><b>정보</b> 생활정보 8종</span></div>
+      <div class="cta"><a class="btn pri" href="#try">직접 체험해 보기</a><a class="btn sec" href="#deck">발표자료 보기</a></div>
+    </div>
+    <div class="stage">
+      <div class="cap" id="heroCap"><b>지금 화면</b>시민이 AI에게 말을 겁니다</div>
+      <div class="phone" id="heroPhone" aria-label="휴대폰 Claude 앱에서 화성MCP를 쓰는 모습"></div>
+    </div>
+  </div>
+</header>
+
+<section id="deck" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">발표자료</div>
+      <h2>시정전략회의 보고 자료</h2>
+      <p class="lead">2026년 10월 22일 시정전략회의에서 보고한 자료 중 6장입니다.</p>
+    </div>
+    <div class="deck">
+      <div>
+        <div class="dview"><img id="dimg" src="media/slide03.jpg" alt=""><div class="dnav"><button type="button" id="dprev" aria-label="이전 장">‹</button><button type="button" id="dnext" aria-label="다음 장">›</button></div></div>
+        <p class="dcap" id="dcap"></p>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">영상</div>
+      <h2>영상 두 편으로 봅니다</h2>
+    </div>
+    <div class="videos">
+      <div class="vcard">
+        <div class="vframe"><video controls preload="metadata" playsinline poster="media/intro_poster.jpg" src="media/intro.mp4"></video></div>
+        <div class="vmeta"><span>소개 영상</span><span>80초</span><span>소리 있음</span></div>
+        <h3>왜 화성MCP인가</h3>
+        <p>행정을 찾는 방식이 시청에서 홈페이지로 그리고 AI로 바뀝니다.</p>
+      </div>
+      <div class="vcard">
+        <div class="vframe"><video controls preload="metadata" playsinline poster="media/demo_poster.jpg" src="media/demo.mp4"></video></div>
+        <div class="vmeta"><span>시연 영상</span><span>79초</span><span>휴대폰 화면 재현</span></div>
+        <h3>예약부터 민원 접수까지</h3>
+        <p>시험 실행 기록을 휴대폰 화면으로 재현했습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="try" class="band">
+  <div class="wrap">
+    <div class="lab">
+      <div class="labl">
+        <div class="phone" id="labPhone" aria-label="체험용 휴대폰 화면"></div>
+      </div>
+      <div class="why">
+        <div class="eyebrow">직접 체험</div>
+        <h2 class="lab-h">시민이 되어 말을 걸어 보세요</h2>
+        <div class="tabs" role="group" aria-label="체험할 이야기" id="tabs"></div>
+        <div class="speak"><button type="button" id="say"></button><button type="button" class="reset" id="again">↺ 처음부터</button></div>
+        <h3 id="whyT"></h3>
+        <div class="steps" id="steps"></div>
+        <p class="disc">시험 실행 기록으로 만든 예시입니다. 실제로 예약·접수되지 않고 개인정보는 가짜 값입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="what">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">왜 필요한가</div>
+      <h2>이제 시민은 AI에게 먼저 묻습니다</h2>
+    </div>
+    <div class="eras">
+      <div class="era"><div class="ico2"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#475169" stroke-width="1.8" stroke-linejoin="round"><path d="M3 23h20M5 23V11M21 23V11M2 11 13 4l11 7zM10 23v-6h6v6"/></svg></div><div class="when">예전</div><h3>시청 민원실</h3><p>찾아가서 기다립니다.</p></div>
+      <div class="era"><div class="ico2"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#475169" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="20" height="14" rx="2"/><path d="M9 23h8M13 19v4M3 9h20"/></svg></div><div class="when">지금</div><h3>화성시 홈페이지</h3><p>메뉴를 찾아 들어갑니다.</p></div>
+      <div class="era now"><div class="ico2"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#9fb3ff" stroke-width="1.8" stroke-linejoin="round"><path d="M4 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4a3 3 0 0 1-3-3z"/><path d="M9 10.5h.01M13 10.5h.01M17 10.5h.01" stroke-width="2.6" stroke-linecap="round"/></svg></div><div class="when">이제</div><h3>화성MCP</h3><p>말하면 AI가 대신 찾고 신청합니다.</p></div>
+    </div>
+    <div class="plug">
+      <div>
+        <h3>MCP는 AI용 <span>콘센트 규격</span>입니다</h3>
+        <p>2024년 11월 Anthropic이 공개한 연결 규격으로 여러 AI 회사가 함께 씁니다. <span class="nw">한 번 맞춰 두면</span> 어느 AI든 화성시에 꽂아 씁니다.</p>
+      </div>
+      <div class="plugs" aria-hidden="true">
+        <div class="ais"><span>ChatGPT</span><span>Claude</span><span>Gemini</span></div>
+        <div class="sock">화성<br>MCP</div>
+        <div class="srcs"><span>도와드림 QR</span><span>통합예약</span><span>생활정보</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">작동 원리</div>
+      <h2>답은 화성시 원본에서 나옵니다</h2>
+    </div>
+    <div class="flow">
+      <div class="node"><div class="k">1 · 시민</div><h3>평소처럼 말합니다</h3><p>"주말에 갈 만한 데 있어?"</p></div>
+      <div class="node"><div class="k">2 · 시민의 AI</div><h3>화성시 일인 줄 압니다</h3><p>쓰던 AI 그대로입니다.</p></div>
+      <div class="node hub"><div class="k">3 · 화성MCP</div><h3>요청을 전달합니다</h3><p>AI와 화성시 시스템을 잇습니다.</p></div>
+      <div class="node"><div class="k">4 · 화성시 원본</div><h3>원래 창구가 처리</h3><p>도와드림 QR · 통합예약 · 공공 정보</p></div>
+    </div>
+    <div class="caps">
+      <div class="capc"><div class="k">민원</div><h3>말하면 접수까지</h3><p>2026년 10월 12일 실제 접수를 확인했습니다.</p></div>
+      <div class="capc"><div class="k">예약</div><h3>찾고 신청까지</h3><p>남은 자리 확인부터 신청·취소까지 합니다.</p></div>
+      <div class="capc"><div class="k">생활정보 8종</div><h3>궁금한 것을 바로</h3><div class="tags"><span>버스 도착</span><span>응급실</span><span>쓰레기 배출</span><span>대기질</span><span>복지</span><span>조례</span><span>공영주차장</span><span>시 공지</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="safe">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">안심하고 쓰도록</div>
+      <h2>AI가 마음대로 하지 않습니다</h2>
+    </div>
+    <div class="safe">
+      <div><span class="ic"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#2447D6" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"><path d="M5 2h8l4 4v14H5z"/><path d="M8 11h6M8 15h6"/></svg></span><h3>답은 원본에서</h3><p>출처와 받은 시각을 함께 붙입니다.</p></div>
+      <div><span class="ic"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#2447D6" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"><path d="m4 11 5 5 9-10"/></svg></span><h3>동의해야 진행</h3><p>내용을 보여 주고 동의받은 뒤에만 신청합니다.</p></div>
+      <div><span class="ic"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#2447D6" stroke-width="1.9" stroke-linejoin="round"><rect x="4" y="9" width="14" height="10" rx="2"/><path d="M7 9V6a4 4 0 0 1 8 0v3"/></svg></span><h3>개인정보 저장 안 함</h3><p>접수자 정보를 화성MCP 서버에 남기지 않습니다.</p></div>
+      <div><span class="ic"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#2447D6" stroke-width="1.9" stroke-linejoin="round"><path d="M11 2 3 5v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V5z"/></svg></span><h3>새 민감정보 없음</h3><p>이미 열린 정보와 서비스만 씁니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="road" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">앞으로</div>
+      <h2>검증한 만큼 단계적으로 엽니다</h2>
+    </div>
+    <div class="road">
+      <div><span class="y">2026 하반기</span><h3>대표 창구부터</h3><p>도와드림 QR · 통합예약 · 생활정보 시범 공개가 목표입니다.</p></div>
+      <div><span class="y">2027</span><h3>부서 도구를 더합니다</h3><p>부서 서비스와 공무원이 만든 AI 도구를 등록합니다.</p></div>
+      <div><span class="y">2028~</span><h3>모든 창구를 하나로</h3><p>시 서비스 전체를 화성MCP로 묶습니다.</p></div>
+    </div>
+    <div class="gov"><div class="k">정부 동향</div><p>행정안전부는 2026년 9월 행정서비스를 API·MCP로 제공하겠다고 밝혔고 NIA는 12월까지 MCP 검증 기준을 마련합니다.</p></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">자주 묻는 질문</div>
+      <h2>궁금한 점</h2>
+    </div>
+    <div class="faq">
+      <details><summary>지금 바로 써 볼 수 있나요?</summary><p>시범 공개를 준비 중입니다. 공개되면 AI 앱 연결 설정에 주소 한 줄만 넣으면 됩니다.</p></details>
+      <details><summary>유료 AI가 꼭 있어야 하나요?</summary><p>아닙니다. 웹에서 바로 쓰는 화성MCP와 홈페이지 연결도 함께 준비합니다.</p></details>
+      <details><summary>AI가 마음대로 신청하지 않나요?</summary><p>신청과 접수 전에 전체 내용을 보여 주고 동의를 받습니다.</p></details>
+      <details><summary>어떤 AI에서 쓸 수 있나요?</summary><p>ChatGPT · Claude · Gemini 등 MCP를 지원하는 AI라면 같은 방식으로 씁니다.</p></details>
+    </div>
+  </div>
+</section>
+
+<div class="closing">
+  <div class="wrap">
+    <h2>화성시에 <em>무엇이든</em> 물어보세요</h2>
+    <p>시민의 AI가 찾아오는 시청 창구, 화성MCP</p>
+    <a class="btn" href="#try">다시 체험하기</a>
+  </div>
+</div>
+<footer><div class="wrap"><img src="media/hs_logo.png" alt="화성특례시" class="flogo"><b>화성특례시 AI스마트전략실 AI공무원TF</b> · 2026년 10월</div></footer>
+
+<script>
+// ───── 휴대폰 Claude 앱 화면 ─────
+const SPARK = () => { let d = ""; for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6 + .13, r2 = [17, 14, 16, 13][i % 4];
+  d += `M${20 + 3.5 * Math.cos(a)} ${20 + 3.5 * Math.sin(a)}L${20 + r2 * Math.cos(a)} ${20 + r2 * Math.sin(a)}`; }
+  return `<svg width="44" height="44" viewBox="0 0 40 40"><path d="${d}" stroke="#D97757" stroke-width="3.2" stroke-linecap="round"/></svg>`; };
+const I = {
+  ghost: '<svg width="24" height="24" viewBox="0 0 26 26"><path d="M5 23V12a8 8 0 0 1 16 0v11l-2.7-2-2.6 2-2.7-2-2.6 2-2.7-2z" stroke="#1C1C1B" stroke-width="1.7" fill="none" stroke-linejoin="round"/><circle cx="10" cy="12" r="1.2" fill="#1C1C1B"/><circle cx="16" cy="12" r="1.2" fill="#1C1C1B"/></svg>',
+  neu: '<svg width="26" height="26" viewBox="0 0 28 28"><path d="M14 2.5a11.5 11.5 0 1 1-5.6 21.5L3 25.5l1.6-5A11.5 11.5 0 0 1 14 2.5z" fill="#1C1C1B"/><path d="M14 9v10M9 14h10" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  more: '<svg width="6" height="20" viewBox="0 0 6 22"><circle cx="3" cy="3" r="2.2" fill="#1C1C1B"/><circle cx="3" cy="11" r="2.2" fill="#1C1C1B"/><circle cx="3" cy="19" r="2.2" fill="#1C1C1B"/></svg>',
+  wave: '<div class="act" style="background:#1C1C1B"><svg width="15" height="15" viewBox="0 0 16 16"><path d="M2 6v4M5 4v8M8 2v12M11 4v8M14 6v4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></div>',
+  send: '<div class="act" style="background:#C8643F"><svg width="15" height="15" viewBox="0 0 16 16"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>',
+  stop: '<div class="act" style="background:#F0EFEB"><svg width="13" height="13" viewBox="0 0 14 14"><rect x="1.5" y="1.5" width="11" height="11" rx="1.5" stroke="#1C1C1B" stroke-width="1.6" fill="none"/></svg></div>',
+  cn: '<span class="cn">' + "<i></i>".repeat(9) + "</span>",
+};
+const ACTS = () => { const s = (d) => `<svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="#7E7D78" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">${d}</svg>`;
+  return `<div class="acts">${s('<rect x="6.5" y="6.5" width="10" height="10" rx="2"/><path d="M13.5 6.5v-2a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"/>')}${s('<path d="M6 4v12l10-6z"/>')}${s('<path d="M6.5 9 9.5 3c1.3 0 2 1 1.8 2.3L11 8h4.3a1.7 1.7 0 0 1 1.6 2.1l-1.4 5.5a1.7 1.7 0 0 1-1.6 1.3H6.5zM3 9h3.5v8H3z"/>')}${s('<path d="M13.5 11 10.5 17c-1.3 0-2-1-1.8-2.3L9 12H4.7a1.7 1.7 0 0 1-1.6-2.1l1.4-5.5A1.7 1.7 0 0 1 6.1 3.1h7.4zM17 11h-3.5V3H17z"/>')}</div>`; };
+const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function makePhone(host) {
+  host.innerHTML = `<div class="scr"><div class="punch"></div>
+    <div class="stat"><span>10:30</span><span class="r"><svg width="15" height="13" viewBox="0 0 16 14"><path d="M1 13h2V9H1zm4 0h2V6H5zm4 0h2V3H9zm4 0h2V0h-2z" fill="#222"/></svg><span class="bat">80</span></span></div>
+    <div class="apptop"><svg width="24" height="20" viewBox="0 0 26 22"><path d="M2 3h21M2 11h15M2 19h10" stroke="#1C1C1B" stroke-width="1.9" stroke-linecap="round"/></svg><div class="rt"></div></div>
+    <div class="welcome">${SPARK()}<h4>좋은 아침이에요</h4></div>
+    <div class="chat"><div class="inner"></div></div>
+    <div class="comp"><div class="tx ph">Claude와 채팅하세요…</div><div class="row"><div class="l"><div class="cb"><svg width="15" height="15" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12" stroke="#3a3a38" stroke-width="1.7" stroke-linecap="round"/></svg></div><div class="mp">Opus 5.5 중간</div></div><div class="r"><div class="cb"><svg width="15" height="17" viewBox="0 0 16 18"><rect x="5" y="1" width="6" height="10" rx="3" stroke="#3a3a38" stroke-width="1.5" fill="none"/><path d="M2.5 8.5a5.5 5.5 0 0 0 11 0M8 14v3" stroke="#3a3a38" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div><div class="actw"></div></div></div></div>
+    <div class="anav"><svg width="17" height="15" viewBox="0 0 18 16"><path d="M3 2v12M9 2v12M15 2v12" stroke="#555" stroke-width="1.8" stroke-linecap="round"/></svg><svg width="17" height="17" viewBox="0 0 18 18"><rect x="2" y="2" width="14" height="14" rx="5" stroke="#555" stroke-width="1.8" fill="none"/></svg><svg width="11" height="17" viewBox="0 0 12 18"><path d="M10 2 3 9l7 7" stroke="#555" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>`;
+  const q = (s) => host.querySelector(s);
+  const inner = q(".inner"), tx = q(".tx"), actw = q(".actw"), rt = q(".rt"), wel = q(".welcome");
+  let token = 0;
+  const sleep = (ms, t) => new Promise((r) => setTimeout(r, REDUCE ? 0 : ms)).then(() => { if (t !== token) throw "stop"; });
+  function idle(fresh) { tx.className = "tx ph"; tx.textContent = fresh ? "Claude와 채팅하세요…" : "Claude에게 질문하세요…"; actw.innerHTML = I.wave; rt.innerHTML = fresh ? I.ghost : I.neu + I.more; wel.style.opacity = fresh ? 1 : 0; }
+  function reset() { token++; inner.innerHTML = ""; idle(true); }
+  function addBlock(html) { const d = document.createElement("div"); d.innerHTML = html; const el = d.firstElementChild; inner.appendChild(el); return el; }
+  // 답을 글자 단위로 흘린다(태그는 유지)
+  async function stream(el, html, t) {
+    el.innerHTML = html; const nodes = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    while (walk.nextNode()) nodes.push([walk.currentNode, walk.currentNode.textContent]);
+    if (REDUCE) return; nodes.forEach(([n]) => n.textContent = "");
+    for (const [n, full] of nodes) for (let i = 0; i < full.length; i += 3) { n.textContent = full.slice(0, i + 3); if (i % 12 === 0) await sleep(16, t); }
+  }
+  async function turn(st) {
+    const t = ++token;
+    wel.style.opacity = 0; rt.innerHTML = I.neu + I.more;
+    tx.className = "tx"; actw.innerHTML = I.send;
+    for (let i = 1; i <= st.u.length; i++) { tx.innerHTML = st.u.slice(0, i).replace(/&/g, "&amp;").replace(/</g, "&lt;") + '<span class="caret"></span>'; await sleep(st.u.length > 40 ? 22 : 38, t); }
+    await sleep(300, t);
+    addBlock(`<div class="mu"><div></div></div>`).firstElementChild.textContent = st.u;
+    tx.className = "tx ph"; tx.textContent = "Claude에게 질문하세요…"; actw.innerHTML = I.stop;
+    const th = addBlock(`<div class="ln"><span class="dt"><i></i><i></i><i></i></span>사고 과정 ›</div>`);
+    await sleep(900, t);
+    if (st.tool) { th.innerHTML = `<span class="dt"><i></i><i></i><i></i></span>화성시 사용 중`; await sleep(1100, t); th.innerHTML = `${I.cn}화성시 사용함 ›`; }
+    else th.remove();
+    const a = addBlock(`<div class="ma"></div>`); await stream(a, st.a, t);
+    addBlock(ACTS()); actw.innerHTML = I.wave;
+  }
+  function show(st) { // 움직임 없이 바로 보이기
+    wel.style.opacity = 0; rt.innerHTML = I.neu + I.more;
+    addBlock(`<div class="mu"><div></div></div>`).firstElementChild.textContent = st.u;
+    if (st.tool) addBlock(`<div class="ln">${I.cn}화성시 사용함 ›</div>`);
+    addBlock(`<div class="ma">${st.a}</div>`); addBlock(ACTS()); idle(false);
+  }
+  reset();
+  return { reset, turn, show, stop: () => token++ };
+}
+
+// ───── 체험 이야기(2026. 10. 시험 실행 기록 기반 예시) ─────
+const SCEN = [
+  { name: "주말 나들이 예약", title: "주말 나들이를 예약하는 동안", sub: "통합예약 사이트를 열지 않고 대화만으로 신청까지 갑니다.", steps: [
+    { u: "이번 주말에 애들이랑 화성에서 갈 만한 데 있어?", tool: 1, t: "화성시 통합예약에서 찾습니다",
+      a: "<p>이번 주말 아이들과 갈 만한 곳을 화성시 통합예약에서 찾았어요.</p><ul><li><b>비봉습지공원 10월 해설 프로그램</b> · 무료</li><li><b>로보카폴리 어린이 미디어 체험</b> · 화성시미디어센터</li><li><b>동화구연 '아기돼지 삼형제'</b> · 서연이음터도서관</li></ul><p>마음에 드는 곳을 고르시면 신청까지 도와드릴게요.</p>",
+      w: "AI가 화성MCP의 <b>통합예약 찾기</b>를 씁니다. 지금 올라온 프로그램만 나옵니다." },
+    { u: "비봉습지 괜찮네. 토요일로 2명 예약해 줘", tool: 1, t: "남은 자리를 확인합니다",
+      a: "<p>토요일 비봉습지 해설 프로그램은 <b>무료</b>이고 회차별 남은 자리는 이래요.</p><ul><li>10:00 · 20명</li><li>11:00 · 18명</li><li>14:00 · 20명</li><li>15:00 · 14명</li></ul><p>몇 시로 할까요?</p>",
+      w: "회차와 <b>남은 자리</b>를 바로 가져옵니다." },
+    { u: "오후 2시로 해 줘. 나랑 초등 2학년 아이 하나야", tool: 0, t: "신청 전에 확인을 받습니다",
+      a: "<p>신청 내용을 정리했어요.</p><ul><li><b>프로그램</b> 비봉습지공원 10월 해설</li><li><b>일시</b> 10/24(토) 14:00</li><li><b>인원</b> 2명 (성인 1 · 초등 1)</li><li><b>요금</b> 무료</li></ul><p>개인정보 수집·이용에 동의하시면 이대로 신청할게요.</p>",
+      w: "신청 전에 내용을 보여 주고 <b>동의</b>를 묻습니다." },
+    { u: "응 동의해. 신청해 줘", tool: 1, t: "통합예약에 신청합니다",
+      a: "<p><b>신청이 완료됐어요.</b></p><ul><li>비봉습지공원 10월 해설 · 10/24(토) 14:00 · 2명</li><li>무료라 결제는 없어요</li></ul><p>신청 내역은 통합예약 <span class='lk'>나의 예약현황</span>에서 볼 수 있어요.</p>",
+      w: "사이트에서 직접 할 때와 <b>같은 절차</b>로 신청합니다." } ] },
+  { name: "버스 언제 와?", title: "생활정보를 물었을 때", sub: "버스 · 응급실 · 쓰레기 배출 등 생활정보 8종을 원본에서 답합니다.", steps: [
+    { u: "시청 앞에서 버스 타야 하는데 언제 와?", tool: 1, t: "실시간 버스 정보를 받습니다",
+      a: "<p>화성시청 정류장 실시간 도착 정보예요.</p><table><tr><th>노선</th><th>첫째 차</th><th>둘째 차</th></tr><tr><td>22-5</td><td>2분</td><td>18분</td></tr><tr><td>310</td><td>3분</td><td>37분</td></tr><tr><td>G1003</td><td>6분</td><td>29분</td></tr><tr><td>5</td><td>6분</td><td>30분</td></tr></table><p>교통 상황에 따라 바뀔 수 있어요.</p>",
+      w: "버스정보 원본의 <b>실시간 값</b>에 받은 시각을 붙입니다." },
+    { u: "이번 주 우리 동네 쓰레기는 언제 내놓아?", tool: 1, t: "배출 요일을 찾습니다",
+      a: "<p>사시는 동네를 알려 주시면 화성시 생활폐기물 배출 안내에서 요일과 시간 그리고 배출 장소를 찾아 드릴게요.</p>",
+      w: "<b>생활정보 8종</b>을 같은 방식으로 답합니다." } ] },
+  { name: "불편 바로 접수", title: "불편을 말했을 때", sub: "불편을 털어놓으면 AI가 먼저 민원 접수를 권합니다.", steps: [
+    { u: "다음 차가 30분 넘게 걸리는 게 많네. 배차가 너무 길다", tool: 0, t: "AI가 먼저 접수를 권합니다",
+      a: "<p><b>화성시에 민원으로 접수해 드릴까요?</b></p><p>방금 조회에서는 다음 차까지 오래 걸리는 노선이 많았어요. 접수하려면 이름 · 연락처 · 생년월일 · 성별 · 주소가 필요해요.</p>",
+      w: "불편을 말하면 AI가 <b>먼저 접수를 권합니다</b>." },
+    { u: "응 접수해 줘. 홍길동, 010-0000-0000, 1990-01-01, 남성, 시청로 159", tool: 0, t: "민원 내용을 정리합니다",
+      a: "<p>이 내용으로 도와드림 QR에 접수할게요.</p><ul><li><b>위치</b> 화성시청 앞 버스정류장</li><li><b>내용</b> 배차 간격이 길어 이동이 어렵습니다. 노선 배차를 늘려 주세요.</li><li><b>접수자</b> 홍길동 · 010-0000-0000</li></ul><p>개인정보 제공에 동의하시면 접수할게요.</p>",
+      w: "AI가 민원을 정리하고 <b>동의</b>를 받습니다." },
+    { u: "응 동의해. 접수해 줘", tool: 1, t: "도와드림 QR에 접수합니다",
+      a: "<p><b>도와드림 QR에 접수되었습니다.</b></p><p>담당 부서가 확인한 뒤 등록하신 연락처로 처리 결과를 알려 드려요.</p>",
+      w: "실제 창구인 <b>도와드림 QR</b>로 들어갑니다." } ] },
+  { name: "화성MCP가 없다면?", title: "화성MCP가 없을 때와 비교", sub: "같은 질문이 화성MCP가 있고 없고에 따라 어떻게 달라지는지 봅니다.", steps: [
+    { u: "이번 주말 화성시 체험 프로그램 신청할 수 있어?", tool: 0, t: "연결이 없으면 돌려보냅니다",
+      a: "<p class='off'>화성시의 최신 프로그램 정보는 제가 확인할 수 없어요. 화성시 홈페이지나 통합예약 사이트에서 직접 확인해 주세요.</p>",
+      w: "연결이 없으면 AI는 <b>추측하거나 홈페이지로 돌려보냅니다</b>." },
+    { u: "화성시 연결하고 다시 찾아 줘", tool: 1, t: "연결하면 바로 찾습니다",
+      a: "<p>화성시 통합예약에서 찾았어요. 이번 주말 무료 프로그램은 <b>비봉습지공원 해설</b> · <b>어린이 미디어 체험</b> · <b>동화구연</b>이 있어요. 고르시면 신청까지 할게요.</p>",
+      w: "화성MCP가 있으면 <b>원본에서 찾고 신청까지</b> 갑니다." } ] },
+];
+
+const $ = (id) => document.getElementById(id);
+
+// 첫 화면 휴대폰: 저절로 돌아가는 짧은 장면(보일 때만)
+const hero = makePhone($("heroPhone"));
+const HERO = [SCEN[0].steps[0], SCEN[0].steps[1], SCEN[2].steps[0]];
+const HCAP = ["시민이 AI에게 말을 겁니다", "AI가 화성시 통합예약을 씁니다", "불편을 말하면 접수를 권합니다"];
+let heroOn = false, heroRun = 0;
+async function heroLoop() {
+  const run = ++heroRun;
+  try {
+    while (heroOn && run === heroRun) {
+      hero.reset();
+      for (let i = 0; i < HERO.length; i++) {
+        $("heroCap").innerHTML = `<b>${i + 1} / ${HERO.length}</b>${HCAP[i]}`;
+        await hero.turn(HERO[i]); await new Promise((r) => setTimeout(r, 2200));
+        if (!heroOn || run !== heroRun) return;
+      }
+      await new Promise((r) => setTimeout(r, 2500));
+    }
+  } catch (e) { /* 멈춤 */ }
+}
+if (REDUCE) { hero.show(HERO[0]); hero.show(HERO[1]); }
+else new IntersectionObserver((es) => { const v = es[0].isIntersecting; if (v && !heroOn) { heroOn = true; heroLoop(); } else if (!v && heroOn) { heroOn = false; hero.stop(); } }, { threshold: .25 }).observe($("heroPhone"));
+
+// 체험 휴대폰
+const lab = makePhone($("labPhone"));
+let cur = 0, idx = 0, busy = false;
+function tabs() {
+  $("tabs").innerHTML = SCEN.map((s, i) => `<button type="button" aria-pressed="${i === cur}" data-i="${i}"><span class="n">${i + 1}</span>${s.name}</button>`).join("");
+  $("tabs").querySelectorAll("button").forEach((b) => b.onclick = () => open(+b.dataset.i));
+}
+function steps(active) {
+  const s = SCEN[cur]; $("whyT").textContent = s.title;
+  $("steps").className = "steps" + (s.steps.length === 4 ? " four" : "");
+  $("steps").innerHTML = s.steps.map((st, i) => {
+    const cls = i === active ? "on" : i < idx ? "done" : "";
+    return `<div class="st ${cls}"><div class="no">${i + 1}</div><div><div class="t">${st.t}</div><div class="d">${i < idx || i === active ? st.w : "위 단추를 누르면 나옵니다"}</div></div></div>`;
+  }).join("");
+}
+function sayBtn() {
+  const s = SCEN[cur], b = $("say");
+  if (idx < s.steps.length) b.innerHTML = `<span class="h">눌러서 말하기 · ${idx + 1}/${s.steps.length}</span>${s.steps[idx].u}`;
+  else b.innerHTML = `<span class="h">이야기 끝 · 다음 이야기</span>${SCEN[(cur + 1) % SCEN.length].name}`;
+  b.disabled = false;
+}
+async function speak() {
+  if (busy) return; const s = SCEN[cur];
+  if (idx >= s.steps.length) { open((cur + 1) % SCEN.length); return; }
+  busy = true; $("say").disabled = true; steps(idx);
+  try { await lab.turn(s.steps[idx]); idx++; steps(idx - 1); } catch (e) { /* 다른 이야기로 바뀜 */ }
+  busy = false; sayBtn();
+}
+function open(i) { lab.stop(); busy = false; cur = i; idx = 0; lab.reset(); tabs(); steps(-1); sayBtn(); }
+$("say").onclick = speak;
+$("again").onclick = () => open(cur);
+open(0);
+
+// 발표자료
+const SL = [["slide03.jpg", "어디부터", "시민이 가장 많이 찾는 대표 창구부터 AI에 엽니다."], ["slide04.jpg", "MCP란", "MCP는 AI가 찾아오는 시청 창구입니다."], ["slide05.jpg", "모든 시민에게", "AI를 구독하지 않는 시민도 쓰도록 세 갈래로 넓힙니다."], ["slide08.jpg", "바깥 흐름", "다른 곳은 만들기와 조회에 머물고 화성은 처리까지 잇습니다."], ["slide09.jpg", "중앙 동향", "중앙도 올해 MCP 기준을 만들고 있습니다."], ["slide10.jpg", "맺음", "화성시에 무엇이든 물어보세요."]];
+let di = 0;
+$("thumbs").innerHTML = SL.map(([f, t], k) => `<button type="button" data-k="${k}"><img src="media/${f}" alt="" loading="lazy"><span><b>${k + 1}. ${t}</b></span></button>`).join("");
+$("thumbs").querySelectorAll("button").forEach((b) => b.onclick = () => slide(+b.dataset.k));
+function slide(k) {
+  di = (k + SL.length) % SL.length; const [f, t, c] = SL[di];
+  $("dimg").src = "media/" + f; $("dimg").alt = `발표자료 ${di + 1}장 ${t}`;
+  $("dcap").innerHTML = `<b>${di + 1} / ${SL.length}</b>${c}`;
+  $("thumbs").querySelectorAll("button").forEach((b, j) => b.setAttribute("aria-current", j === di));
+}
+$("dprev").onclick = () => slide(di - 1); $("dnext").onclick = () => slide(di + 1);
+let sx = null; $("dimg").addEventListener("touchstart", (e) => sx = e.touches[0].clientX, { passive: true });
+$("dimg").addEventListener("touchend", (e) => { if (sx === null) return; const d = e.changedTouches[0].clientX - sx; if (Math.abs(d) > 40) slide(di + (d < 0 ? 1 : -1)); sx = null; });
+slide(0);
+</script>
+
+</body>
+</html>
