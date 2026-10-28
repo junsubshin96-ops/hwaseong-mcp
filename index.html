@@ -310,6 +310,21 @@ footer b { color: #fff; }
 
 @media (max-width: 680px) { .hero .ans { font-size: 17.5px; } }
 @media (max-width: 380px) { .hero .ans { font-size: 16.5px; } }
+/* 휴대폰 화면 */
+@media (max-width: 680px) {
+  nav.top .links { display: none; }
+  nav.top .wrap { height: 56px; }
+  html { scroll-padding-top: 64px; }
+  .hero { padding-block: 32px 48px; }
+  .hero .phone { --ph: 540px !important; }
+  .speak { grid-template-columns: 1fr; gap: 4px; }
+  .speak .reset { justify-self: end; padding: 10px 6px; font-size: 15px; }
+  .vcard { gap: 12px; }
+}
+@media (max-width: 380px) {
+  .hero h1 { font-size: 40px; }
+  .hero .phone { --ph: 500px !important; }
+}
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 </style>
 </head>
