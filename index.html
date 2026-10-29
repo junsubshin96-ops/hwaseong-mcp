@@ -7,7 +7,7 @@
 <meta name="description" content="시민이 쓰는 AI가 화성시 정보를 찾고 예약하고 민원까지 접수하는 AI 전용 창구, 화성MCP를 소개합니다.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="화성MCP 소개">
-<meta property="og:description" content="AI에게 말하면 화성시가 처리합니다. 발표자료·영상·체험판으로 알아보세요.">
+<meta property="og:description" content="AI에게 말하면 화성시가 처리합니다. 체험판·소개자료·영상으로 알아보세요.">
 <meta property="og:image" content="media/intro_poster.jpg">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="media/hs_logo.png">
@@ -48,7 +48,7 @@ nav.top .wrap { display: flex; align-items: center; gap: 16px; height: 60px; }
 .logo b { color: var(--blue); }
 nav.top .links { display: flex; gap: 2px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
 nav.top .links::-webkit-scrollbar { display: none; }
-nav.top .links a { flex: none; color: var(--sub); text-decoration: none; font-size: 16px; padding: 7px 11px; border-radius: 8px; }
+nav.top .links a { flex: none; color: var(--ink); font-weight: 700; text-decoration: none; font-size: 16px; padding: 7px 11px; border-radius: 8px; }
 nav.top .links a:hover { background: var(--soft); color: var(--ink); }
 
 section { padding-block: 48px; }
@@ -75,8 +75,10 @@ section { padding-block: 48px; }
 .btn.pri:hover { background: var(--blue); }
 .btn.sec { background: var(--bg); color: var(--ink); border-color: var(--line); }
 .stage { position: relative; justify-self: center; }
-.stage .cap { position: absolute; left: -190px; top: 120px; width: 210px; font-size: 15px; color: var(--sub); background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; box-shadow: 0 8px 24px rgba(15,24,48,.06); transition: opacity .4s; }
-.stage .cap b { display: block; color: var(--orange); font-size: 13.5px; margin-bottom: 2px; }
+.stage { display: flex; flex-direction: column; align-items: center; }
+.stage .cap { order: 2; margin-top: 14px; font-size: 15px; color: var(--sub); text-align: center; transition: opacity .4s; }
+.stage .cap b { color: var(--orange); margin-right: 8px; font-variant-numeric: tabular-nums; }
+@media (min-width: 981px) { .hero .phone { --ph: clamp(500px, calc(var(--vh) - 200px), 720px); } }
 
 /* 휴대폰(갤럭시형) + Claude 앱 */
 .phone { --ph: clamp(520px, calc(var(--vh) - 150px), 760px); height: var(--ph); width: calc(var(--ph) * .474); border-radius: 48px; background: #121214; padding: 9px; box-shadow: 0 40px 80px rgba(15,24,48,.18), 0 6px 18px rgba(15,24,48,.10), inset 0 0 0 2px #2c2c30; position: relative; flex: none; }
@@ -121,6 +123,13 @@ section { padding-block: 48px; }
 .mp { white-space: nowrap; height: 32px; border-radius: 16px; background: var(--chip); padding: 0 13px; display: flex; align-items: center; font-size: 12.5px; color: #2b2b2a; }
 .act { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; }
 .caret { display: inline-block; width: 2px; height: 17px; background: var(--clay); vertical-align: -3px; margin-left: 1px; animation: pulse 1s infinite; }
+.scr { container-type: inline-size; }
+@container (max-width: 270px) {
+  .comp { left: 9px; right: 9px; padding: 10px 8px 7px 10px; }
+  .comp .l, .comp .r { gap: 5px; }
+  .cb, .act { width: 28px; height: 28px; }
+  .mp { height: 28px; padding: 0 9px; font-size: 11.5px; }
+}
 .anav { position: absolute; left: 0; right: 0; bottom: 0; height: 38px; background: #fff; display: flex; justify-content: space-around; align-items: center; padding: 0 56px; z-index: 8; }
 
 /* 한눈에 */
@@ -158,14 +167,16 @@ section { padding-block: 48px; }
 
 /* 체험 */
 .lab { display: grid; grid-template-columns: auto 1fr; gap: 56px; align-items: start; }
-.lab-h { font-size: clamp(30px, 3.4vw, 40px); font-weight: 700; margin: 8px 0 8px; }
+.lab-h { font-size: clamp(30px, 3.4vw, 40px); font-weight: 700; margin: 8px 0 6px; }
+.lab-sub { font-size: 16px; color: var(--sub); margin-bottom: 16px; }
+.lab-sub b { color: var(--orange); }
 .lab-lead { margin-bottom: 20px; }
 #try { padding-block: 32px; overflow: hidden; }
 #try .phone { --ph: clamp(560px, calc(var(--vh) - 130px), 760px); }
 @media (max-width: 980px) {
   .lab { display: flex; flex-direction: column; gap: 0; }
   .why { display: contents; }
-  .why > .eyebrow { order: 1; } .lab-h { order: 2; } .tabs { order: 3; }
+  .why > .eyebrow { order: 1; } .lab-h { order: 2; } .lab-sub { order: 2; } .tabs { order: 3; }
   .speak { order: 4; max-width: none; margin-bottom: 14px; } .labl { order: 5; margin-bottom: 20px; } #whyT { order: 6; } .steps { order: 7; } .disc { order: 8; }
 }
 @media (min-width: 981px) { .steps.four { grid-template-columns: 1fr 1fr; } }
@@ -181,6 +192,10 @@ section { padding-block: 48px; }
 .speak #say::before { content: ""; position: absolute; left: 14px; top: 50%; margin-top: -14px; width: 28px; height: 28px; border-radius: 50%; background: var(--orange); }
 .speak #say::after { content: ""; position: absolute; left: 24px; top: 50%; margin-top: -7px; border-left: 10px solid #fff; border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
 .speak #say .h { display: block; font-size: 13.5px; font-weight: 700; color: var(--orange); margin-bottom: 2px; }
+.speak #say:not(:disabled) .h { animation: blink 1.4s ease-in-out infinite; }
+.speak #say:not(:disabled)::before { animation: ring 1.6s ease-out infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+@keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(236,91,30,.55); } 100% { box-shadow: 0 0 0 12px rgba(236,91,30,0); } }
 .speak #say:disabled { opacity: .45; cursor: default; transform: translateY(4px); box-shadow: 0 2px 0 var(--ink); }
 .tabrow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-bottom: 22px; }
 .tabrow .tabs { margin-bottom: 0; }
@@ -268,7 +283,10 @@ details p { padding: 0 0 24px; color: var(--sub); }
 .closing h2 em { font-style: normal; color: #9fb3ff; }
 .closing p { margin-top: 14px; color: #c9d1e6; font-size: 19px; }
 .closing p.brand { margin-top: 6px; font-size: 16px; color: #8f9bb8; }
-.closing .btn { margin-top: 28px; background: #fff; color: var(--ink); }
+.closing .btn { background: #fff; color: var(--ink); }
+.close-cta { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.closing .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.45); }
+.closing .btn.ghost:hover { border-color: #fff; }
 footer { padding-block: 34px 48px; font-size: 15px; color: var(--mute); background: var(--ink); border-top: 1px solid rgba(255,255,255,.08); }
 footer b { color: #fff; }
 .flogo { display: block; height: 22px; width: auto; margin-bottom: 12px; background: #fff; padding: 6px 10px; border-radius: 6px; box-sizing: content-box; }
@@ -281,13 +299,13 @@ footer b { color: #fff; }
   .thumbs button img { width: 100%; }
   .thumbs button b { font-size: 14.5px; }
 }
+@media (min-width: 981px) { #video .vcard { gap: 10px; } #video .sec-head { margin-bottom: 22px; } }
 /* 뒤쪽 설명 구획은 한 화면 고정 없이 촘촘하게 */
 @media (min-width: 981px) { #what, #how, #safe, #road, #faq { min-height: 0; padding-block: 40px; }
   #what .sec-head, #how .sec-head, #safe .sec-head, #road .sec-head, #faq .sec-head { margin-bottom: 24px; } }
 @media (max-width: 980px) {
   .hero-grid, .lab, .deck { grid-template-columns: 1fr; }
   .hero-grid { gap: 48px; }
-  .stage .cap { display: none; }
   .thumbs { grid-template-columns: repeat(3, 1fr); }
   .thumbs button { grid-template-columns: 1fr; }
   .thumbs button img { width: 100%; }
@@ -334,7 +352,7 @@ footer b { color: #fff; }
 <nav class="top" aria-label="이 페이지 안 이동">
   <div class="wrap">
     <a class="logo" href="#top" aria-label="화성특례시 화성MCP 처음으로"><img src="media/hs_logo.png" alt="화성특례시" width="107" height="24"><span class="bar"></span>화성<b>MCP</b></a>
-    <div class="links"><a href="#deck">발표자료</a><a href="#video">영상</a><a href="#try">체험</a><a href="#what">왜 필요한가</a><a href="#how">원리</a><a href="#safe">안심</a><a href="#faq">질문</a></div>
+    <div class="links"><a href="#try">체험</a><a href="#deck">소개자료</a><a href="#video">영상</a><a href="#what">왜 필요한가</a><a href="#how">원리</a><a href="#safe">안심</a><a href="#faq">질문</a></div>
   </div>
 </nav>
 
@@ -346,7 +364,7 @@ footer b { color: #fff; }
       <p class="ans">시민이 쓰는 AI가<br><strong>화성시 정보를 찾고 <span class="nw">예약하고 민원까지</span> 접수</strong>하는<br><span class="nw">AI 전용 창구</span>입니다.</p>
       <div class="pills"><span class="pill2"><b>민원</b> 도와드림 QR</span><span class="pill2"><b>예약</b> 통합예약</span><span class="pill2"><b>정보</b> 생활정보 8종</span></div>
       <p class="next">대표 창구부터 시작해 <b>화성시 모든 서비스</b>로 넓혀 갑니다.</p>
-      <div class="cta"><a class="btn pri" href="#try">직접 체험해 보기</a><a class="btn sec" href="#deck">발표자료 보기</a></div>
+      <div class="cta"><a class="btn pri" href="#try">직접 체험해 보기</a><a class="btn sec" href="#deck">소개자료 보기</a></div>
     </div>
     <div class="stage">
       <div class="cap" id="heroCap"><b>지금 화면</b>시민이 AI에게 말을 겁니다</div>
@@ -355,12 +373,32 @@ footer b { color: #fff; }
   </div>
 </header>
 
-<section id="deck" class="band">
+<section id="try" class="band">
+  <div class="wrap">
+    <div class="lab">
+      <div class="labl">
+        <div class="phone" id="labPhone" aria-label="체험용 휴대폰 화면"></div>
+      </div>
+      <div class="why">
+        <div class="eyebrow">직접 체험</div>
+        <h2 class="lab-h">같이 말을 걸어 볼까요?</h2>
+        <p class="lab-sub">말 대신 아래 <b>눌러서 말하기</b> 단추를 누르면 준비된 대화가 차례로 재생됩니다.</p>
+        <div class="tabs" role="group" aria-label="체험할 이야기" id="tabs"></div>
+        <div class="speak"><button type="button" id="say"></button><button type="button" class="reset" id="again">↺ 처음부터</button></div>
+        <h3 id="whyT"></h3>
+        <div class="steps" id="steps"></div>
+        <p class="disc">2026년 10월 화성MCP 시험 실행 기록으로 만든 예시 대화입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="deck">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">발표자료</div>
-      <h2>시정전략회의 보고 자료</h2>
-      <p class="lead">2026년 10월 22일 시정전략회의에서 보고한 자료 중 6장입니다.</p>
+      <div class="eyebrow">소개자료</div>
+      <h2>화성MCP</h2>
+      <p class="lead">화성MCP를 소개하는 자료 6장입니다.</p>
     </div>
     <div class="deck">
       <div>
@@ -372,11 +410,11 @@ footer b { color: #fff; }
   </div>
 </section>
 
-<section id="video">
+<section id="video" class="band">
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">영상</div>
-      <h2>영상 두 편으로 봅니다</h2>
+      <h2>영상으로 소개드릴게요</h2>
     </div>
     <div class="videos">
       <div class="vcard">
@@ -387,28 +425,9 @@ footer b { color: #fff; }
       </div>
       <div class="vcard">
         <div class="vframe"><video controls preload="metadata" playsinline poster="media/demo_poster.jpg" src="media/demo.mp4"></video></div>
-        <div class="vmeta"><span>시연 영상</span><span>79초</span><span>휴대폰 화면 재현</span></div>
+        <div class="vmeta"><span>시연 영상</span><span>79초</span><span>소리 없음</span><span>휴대폰 화면 재현</span></div>
         <h3>예약부터 민원 접수까지</h3>
-        <p>시험 실행 기록을 휴대폰 화면으로 재현했습니다.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="try" class="band">
-  <div class="wrap">
-    <div class="lab">
-      <div class="labl">
-        <div class="phone" id="labPhone" aria-label="체험용 휴대폰 화면"></div>
-      </div>
-      <div class="why">
-        <div class="eyebrow">직접 체험</div>
-        <h2 class="lab-h">시민이 되어 말을 걸어 보세요</h2>
-        <div class="tabs" role="group" aria-label="체험할 이야기" id="tabs"></div>
-        <div class="speak"><button type="button" id="say"></button><button type="button" class="reset" id="again">↺ 처음부터</button></div>
-        <h3 id="whyT"></h3>
-        <div class="steps" id="steps"></div>
-        <p class="disc">시험 실행 기록으로 만든 예시입니다. 실제로 예약·접수되지 않고 개인정보는 가짜 값입니다.</p>
+        <p>시험 실행 기록을 휴대폰 화면으로 재현했습니다.<br>화성MCP를 연결하면 실제로 민원 접수와 통합예약이 됩니다.</p>
       </div>
     </div>
   </div>
@@ -447,15 +466,15 @@ footer b { color: #fff; }
       <p class="lead">지금은 세 창구로 시작하고 앞으로 <b>화성시의 모든 창구</b>가 같은 길로 이어집니다.</p>
     </div>
     <div class="flow">
-      <div class="node"><div class="k">1 · 시민</div><h3>평소처럼 말합니다</h3><p>"주말에 갈 만한 데 있어?"</p></div>
-      <div class="node"><div class="k">2 · 시민의 AI</div><h3>화성시 일인 줄 압니다</h3><p>쓰던 AI 그대로입니다.</p></div>
+      <div class="node"><div class="k">1 · 시민</div><h3>평소에 쓰던 AI에 말합니다</h3><p>"주말에 화성시에 갈 만한 데 있어?"</p></div>
+      <div class="node"><div class="k">2 · 시민의 AI (클로드·GPT 등)</div><h3>화성시 관련 문의로 인식합니다</h3><p>쓰던 AI 그대로입니다.</p></div>
       <div class="node hub"><div class="k">3 · 화성MCP</div><h3>요청을 전달합니다</h3><p>AI와 화성시 시스템을 잇습니다.</p></div>
       <div class="node"><div class="k">4 · 화성시 원본</div><h3>원래 창구가 처리</h3><p>도와드림 QR · 통합예약 · 공공 정보</p></div>
     </div>
     <div class="caps">
-      <div class="capc"><div class="k">민원</div><h3>말하면 접수까지</h3><p>2026년 10월 12일 실제 접수를 확인했습니다.</p></div>
-      <div class="capc"><div class="k">예약</div><h3>찾고 신청까지</h3><p>남은 자리 확인부터 신청·취소까지 합니다.</p></div>
-      <div class="capc"><div class="k">생활정보 8종</div><h3>궁금한 것을 바로</h3><div class="tags"><span>버스 도착</span><span>응급실</span><span>쓰레기 배출</span><span>대기질</span><span>복지</span><span>조례</span><span>공영주차장</span><span>시 공지</span></div></div>
+      <div class="capc"><div class="k">민원</div><h3>말하면 접수까지</h3><p>2026년 10월 12일 클로드로 넣은 민원이 도와드림 QR을 통해 실제로 접수되었습니다.</p></div>
+      <div class="capc"><div class="k">예약</div><h3>서비스를 찾고 신청까지</h3><p>통합예약시스템에서 남은 자리 확인부터 신청·취소까지 합니다.</p></div>
+      <div class="capc"><div class="k">생활정보 8종</div><h3>궁금한 것을 바로 확인</h3><div class="tags"><span>버스 도착</span><span>응급실</span><span>쓰레기 배출</span><span>대기질</span><span>복지</span><span>조례</span><span>공영주차장</span><span>시 공지</span></div></div>
     </div>
   </div>
 </section>
@@ -486,7 +505,7 @@ footer b { color: #fff; }
       <div><span class="y">2027</span><h3>부서 도구를 더합니다</h3><p>부서 서비스와 공무원이 만든 AI 도구를 등록합니다.</p></div>
       <div><span class="y">2028~</span><h3>모든 창구를 하나로</h3><p>시 서비스 전체를 화성MCP로 묶습니다.</p></div>
     </div>
-    <div class="gov"><div class="k">정부 동향</div><p>행정안전부는 2026년 9월 행정서비스를 API·MCP로 제공하겠다고 밝혔고 NIA는 12월까지 MCP 검증 기준을 마련합니다.</p></div>
+    <div class="gov"><div class="k">정부 동향</div><p>행정안전부는 2026년 9월 행정서비스를 API·MCP로 제공하겠다는 목표를 밝혔고 한국지능정보사회진흥원은 12월까지 MCP 검증 기준을 마련하고 있습니다.</p></div>
   </div>
 </section>
 
@@ -510,7 +529,7 @@ footer b { color: #fff; }
     <h2>화성시에 <em>무엇이든</em> 물어보세요</h2>
     <p>대표 창구부터 시작해 화성시 모든 서비스를 AI로 잇습니다.</p>
     <p class="brand">시민의 AI가 찾아오는 시청 창구, 화성MCP</p>
-    <a class="btn" href="#try">다시 체험하기</a>
+    <div class="close-cta"><a class="btn" href="#try">다시 체험하기</a><a class="btn ghost mail" data-subject="[화성MCP] 의견" hidden>의견 남기기</a><a class="btn ghost mail" data-subject="[화성MCP] 협업 제안" hidden>협업 제안하기</a></div>
   </div>
 </div>
 <footer><div class="wrap"><img src="media/hs_logo.png" alt="화성특례시" class="flogo"><b>화성특례시 AI스마트전략실 AI공무원TF</b> · 2026년 10월</div></footer>
@@ -612,13 +631,13 @@ const SCEN = [
     { u: "응 동의해. 접수해 줘", tool: 1, t: "도와드림 QR에 접수합니다",
       a: "<p><b>도와드림 QR에 접수되었습니다.</b></p><p>담당 부서가 확인한 뒤 등록하신 연락처로 처리 결과를 알려 드려요.</p>",
       w: "실제 창구인 <b>도와드림 QR</b>로 들어갑니다." } ] },
-  { name: "화성MCP가 없다면?", title: "화성MCP가 없을 때와 비교", sub: "같은 질문이 화성MCP가 있고 없고에 따라 어떻게 달라지는지 봅니다.", steps: [
-    { u: "이번 주말 화성시 체험 프로그램 신청할 수 있어?", tool: 0, t: "연결이 없으면 돌려보냅니다",
+  { name: "화성MCP가 없다면?", title: "화성MCP 있을 때 VS 없을 때", sub: "같은 질문이 화성MCP가 있고 없고에 따라 어떻게 달라지는지 봅니다.", steps: [
+    { u: "이번 주말 화성시 체험 프로그램 신청할 수 있어?", tool: 0, t: "",
       a: "<p class='off'>화성시의 최신 프로그램 정보는 제가 확인할 수 없어요. 화성시 홈페이지나 통합예약 사이트에서 직접 확인해 주세요.</p>",
-      w: "연결이 없으면 AI는 <b>추측하거나 홈페이지로 돌려보냅니다</b>." },
-    { u: "화성시 연결하고 다시 찾아 줘", tool: 1, t: "연결하면 바로 찾습니다",
+      w: "화성시와 연결이 없으면 AI는 <b>추측하거나 홈페이지로 돌려보냅니다</b>.<br>이용자는 홈페이지로 가서 직접 정보를 찾아야 합니다." },
+    { u: "이번 주말 화성시 체험 프로그램 신청할 수 있어?", tool: 1, t: "", party: 1,
       a: "<p>화성시 통합예약에서 찾았어요. 이번 주말 무료 프로그램은 <b>비봉습지공원 해설</b> · <b>어린이 미디어 체험</b> · <b>동화구연</b>이 있어요. 고르시면 신청까지 할게요.</p>",
-      w: "화성MCP가 있으면 <b>원본에서 찾고 신청까지</b> 갑니다." } ] },
+      w: "화성MCP로 연결되어 있으면 <b>화성시 원본에서 찾고 신청까지</b> 바로 할 수 있습니다." } ] },
 ];
 
 const $ = (id) => document.getElementById(id);
@@ -657,7 +676,7 @@ function steps(active) {
   $("steps").className = "steps" + (s.steps.length === 4 ? " four" : "");
   $("steps").innerHTML = s.steps.map((st, i) => {
     const cls = i === active ? "on" : i < idx ? "done" : "";
-    return `<div class="st ${cls}"><div class="no">${i + 1}</div><div><div class="t">${st.t}</div><div class="d">${i < idx || i === active ? st.w : "위 단추를 누르면 나옵니다"}</div></div></div>`;
+    return `<div class="st ${cls}"><div class="no">${i + 1}</div><div>${st.t ? `<div class="t">${st.t}</div>` : ""}<div class="d">${i < idx || i === active ? st.w : "위 단추를 누르면 나옵니다"}</div></div></div>`;
   }).join("");
 }
 function sayBtn() {
@@ -670,13 +689,34 @@ async function speak() {
   if (busy) return; const s = SCEN[cur];
   if (idx >= s.steps.length) { open((cur + 1) % SCEN.length); return; }
   busy = true; $("say").disabled = true; steps(idx);
-  try { await lab.turn(s.steps[idx]); idx++; steps(idx - 1); } catch (e) { /* 다른 이야기로 바뀜 */ }
+  try { await lab.turn(s.steps[idx]); if (s.steps[idx].party) confetti(); idx++; steps(idx - 1); } catch (e) { /* 다른 이야기로 바뀜 */ }
   busy = false; sayBtn();
+}
+// 종이 조각 날리기(4번 이야기 마지막). 움직임 줄이기 설정이면 하지 않는다
+function confetti() {
+  if (REDUCE) return;
+  const c = document.createElement("canvas"), x = c.getContext("2d"), W = innerWidth, H = innerHeight, d = devicePixelRatio || 1;
+  c.width = W * d; c.height = H * d; c.style.cssText = "position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:50";
+  x.scale(d, d); document.body.appendChild(c);
+  const col = ["#2447D6", "#F36F21", "#FFC21A", "#19B37D", "#E2457A", "#7FA2FF"];
+  const ps = Array.from({ length: 140 }, (_, i) => ({ x: W / 2 + (Math.random() - .5) * W * .3, y: H * .55, vx: (Math.random() - .5) * 14, vy: -9 - Math.random() * 11,
+    w: 6 + Math.random() * 6, h: 8 + Math.random() * 8, r: Math.random() * 6, vr: (Math.random() - .5) * .4, c: col[i % col.length] }));
+  let t = 0;
+  (function tick() {
+    x.clearRect(0, 0, W, H); t++;
+    for (const p of ps) { p.vy += .32; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c; x.globalAlpha = Math.max(0, 1 - t / 150); x.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.r))); x.restore(); }
+    if (t < 150) requestAnimationFrame(tick); else c.remove();
+  })();
 }
 function open(i) { lab.stop(); busy = false; cur = i; idx = 0; lab.reset(); tabs(); steps(-1); sayBtn(); }
 $("say").onclick = speak;
 $("again").onclick = () => open(cur);
 open(0);
+
+// 의견·협업 단추: 받는 메일 주소를 넣으면 보인다
+const FEEDBACK_MAIL = "junsubshin@korea.kr";
+if (FEEDBACK_MAIL) document.querySelectorAll(".closing .mail").forEach((a) => { a.href = "mailto:" + FEEDBACK_MAIL + "?subject=" + encodeURIComponent(a.dataset.subject); a.hidden = false; });
 
 // 발표자료
 const SL = [["slide03.jpg", "어디부터", "시민이 가장 많이 찾는 대표 창구부터 AI에 엽니다."], ["slide04.jpg", "MCP란", "MCP는 AI가 찾아오는 시청 창구입니다."], ["slide05.jpg", "모든 시민에게", "AI를 구독하지 않는 시민도 쓰도록 세 갈래로 넓힙니다."], ["slide08.jpg", "바깥 흐름", "다른 곳은 만들기와 조회에 머물고 화성은 처리까지 잇습니다."], ["slide09.jpg", "중앙 동향", "중앙도 올해 MCP 기준을 만들고 있습니다."], ["slide10.jpg", "맺음", "화성시에 무엇이든 물어보세요."]];
