@@ -287,6 +287,18 @@ details p { padding: 0 0 24px; color: var(--sub); }
 .close-cta { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .closing .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.45); }
 .closing .btn.ghost:hover { border-color: #fff; }
+dialog#collab { border: 0; padding: 0; border-radius: 20px; width: min(420px, calc(100vw - 32px)); background: var(--bg); color: var(--ink); box-shadow: 0 30px 80px rgba(15,24,48,.3); }
+dialog#collab::backdrop { background: rgba(15,24,48,.55); }
+.dlg { position: relative; padding: 30px 28px 26px; display: grid; gap: 10px; }
+.dlg h3 { font-size: 22px; font-weight: 700; }
+.dlg-x { position: absolute; right: 12px; top: 10px; width: 40px; height: 40px; border: 0; background: none; font: 400 28px/1 var(--f); color: var(--mute); cursor: pointer; border-radius: 10px; }
+.dlg-x:hover { background: var(--soft); color: var(--ink); }
+.who { display: grid; grid-template-columns: auto 1fr; gap: 8px 18px; margin: 8px 0 10px; padding: 18px 20px; background: var(--soft); border-radius: 14px; font-size: 17px; }
+.who dt { color: var(--mute); font-weight: 700; font-size: 15px; padding-top: 1px; }
+.who dd { margin: 0; font-weight: 700; word-break: break-all; }
+#mailAddr { color: var(--blue); user-select: all; }
+.dlg .copy { justify-content: center; width: 100%; }
+.copied { font-size: 14.5px; color: var(--sub); min-height: 1.4em; text-align: center; }
 footer { padding-block: 34px 48px; font-size: 15px; color: var(--mute); background: var(--ink); border-top: 1px solid rgba(255,255,255,.08); }
 footer b { color: #fff; }
 .visits { display: block; height: 20px; width: auto; flex: none; }
@@ -536,9 +548,19 @@ nav.top .visits { margin-left: 6px; }
     <h2>화성시에 <em>무엇이든</em> 물어보세요</h2>
     <p>대표 창구부터 시작해 화성시 모든 서비스를 AI로 잇습니다.</p>
     <p class="brand">시민의 AI가 찾아오는 시청 창구, 화성MCP</p>
-    <div class="close-cta"><a class="btn" href="#try">다시 체험하기</a><a class="btn ghost mail" data-subject="[화성MCP] 협업 제안" hidden>협업 제안하기</a></div>
+    <div class="close-cta"><a class="btn" href="#try">다시 체험하기</a><button type="button" class="btn ghost" id="collabBtn">협업 제안하기</button></div>
   </div>
 </div>
+<dialog id="collab" aria-labelledby="collabT">
+  <form method="dialog" class="dlg">
+    <button class="dlg-x" value="close" aria-label="닫기">×</button>
+    <div class="eyebrow">협업 제안하기</div>
+    <h3 id="collabT">아래 메일로 보내 주세요</h3>
+    <dl class="who"><dt>부서</dt><dd>AI스마트전략실</dd><dt>담당</dt><dd>신준섭</dd><dt>메일</dt><dd><span id="mailAddr">junsubshin@korea.kr</span></dd></dl>
+    <button type="button" class="btn pri copy" id="copyMail">메일 주소 복사</button>
+    <p class="copied" id="copied" aria-live="polite"></p>
+  </form>
+</dialog>
 <footer><div class="wrap"><img src="media/hs_logo.png" alt="화성특례시" class="flogo"><b>화성특례시 AI스마트전략실 AI공무원TF</b> · 2026년 10월<span class="fvisits"><img class="visits" src="https://hits.sh/junsubshin96-ops.github.io/hwaseong-mcp.svg?style=flat-square&amp;label=%EB%88%84%EC%A0%81%20%EC%A0%91%EC%86%8D&amp;color=%232447D6&amp;labelColor=%230F1830" alt="누적 접속 수" height="20" onerror="this.remove()"></span></div></footer>
 
 <script>
@@ -721,9 +743,20 @@ $("say").onclick = speak;
 $("again").onclick = () => open(cur);
 open(0);
 
-// 의견·협업 단추: 받는 메일 주소를 넣으면 보인다
-const FEEDBACK_MAIL = "junsubshin@korea.kr";
-if (FEEDBACK_MAIL) document.querySelectorAll(".closing .mail").forEach((a) => { a.href = "mailto:" + FEEDBACK_MAIL + "?subject=" + encodeURIComponent(a.dataset.subject); a.hidden = false; });
+// 협업 제안하기: 연락처 팝업과 메일 주소 복사
+const dlg = $("collab");
+$("collabBtn").onclick = () => { $("copied").textContent = ""; $("copyMail").textContent = "메일 주소 복사"; dlg.showModal(); };
+dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+$("copyMail").onclick = async () => {
+  const t = $("mailAddr").textContent;
+  let ok = false;
+  try { await navigator.clipboard.writeText(t); ok = true; } catch (e) {
+    const ta = document.createElement("textarea"); ta.value = t; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;opacity:0";
+    document.body.appendChild(ta); ta.select(); try { ok = document.execCommand("copy"); } catch (e2) { ok = false; } ta.remove();
+  }
+  if (ok) { $("copyMail").textContent = "복사했습니다 ✓"; $("copied").textContent = "메일 앱에서 받는 사람 칸에 붙여 넣어 보내 주세요."; }
+  else { const sel = getSelection(), rg = document.createRange(); rg.selectNodeContents($("mailAddr")); sel.removeAllRanges(); sel.addRange(rg); $("copied").textContent = "주소를 선택해 두었습니다. 길게 눌러 복사해 주세요."; }
+};
 
 // 발표자료
 const SL = [["slide03.jpg", "어디부터", "시민이 가장 많이 찾는 대표 창구부터 AI에 엽니다."], ["slide04.jpg", "MCP란", "MCP는 AI가 찾아오는 시청 창구입니다."], ["slide05.jpg", "모든 시민에게", "AI를 구독하지 않는 시민도 쓰도록 세 갈래로 넓힙니다."], ["slide08.jpg", "바깥 흐름", "다른 곳은 만들기와 조회에 머물고 화성은 처리까지 잇습니다."], ["slide09.jpg", "중앙 동향", "중앙도 올해 MCP 기준을 만들고 있습니다."], ["slide10.jpg", "맺음", "화성시에 무엇이든 물어보세요."]];
